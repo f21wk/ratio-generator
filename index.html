@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>比率ジェネレーター</title>
+
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+		<header>
+			<div class="config-area">
+				<div class="size">
+					<label>横幅：<input type="number" name="width" value="500" /> px</label>
+					<label>縦幅：<input type="number" name="height" value="300" /> px</label>
+					<button id="js_btn">計算・リセット</button>
+				</div>
+
+				<div class="ratio">
+					<label><input type="radio" name="ratio" checked />白銀比</label>
+					<label><input type="radio" name="ratio" />黄金比</label>
+					<label><input type="radio" name="ratio" />半分</label>
+				</div>
+
+				<div class="base-size">
+					<p>基本サイズ</p>
+					<label><input type="radio" name="base-size" checked />横幅を元に計算する（縦幅無視）</label>
+					<label><input type="radio" name="base-size" />縦幅を元に計算する（横幅無視）</label>
+					<label><input type="radio" name="base-size" />縦幅と横幅を元に計算する（比率無視）</label>
+				</div>
+			</div>
+		</header>
+
+		<main>
+			<div class="box"></div>
+		</main>
+
+		<script src="js/main.js"></script>
+	</body>
+</html>

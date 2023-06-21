@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+}
+
+header {
+    max-width: 800px;
+}
+
+.config-area{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.config-area > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.size input[type="number"]{
+    width: 3rem;
+}
+
+.size button {
+    width: 10rem;
+}
+.base-size p{
+    margin: 0;
+}
+
+.box{
+    width: 100px;
+    aspect-ratio: 1/1.414;
+
+    background: #4d4d4d;
+}

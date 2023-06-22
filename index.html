@@ -1,56 +1,76 @@
 <!DOCTYPE html>
 <html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>比率ジェネレーター</title>
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>比率ジェネレーター</title>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
 
-	<link rel="stylesheet" href="css/style.css" />
-</head>
+	<body>
+		<header>
+			<h1>比率ジェネレーター</h1>
+			<button id="js_reset">設定初期化</button>
+		</header>
 
-<body>
-	<h1>比率ジェネレーター</h1>
-	<button id="js_reset">設定初期化</button>
-	<div class="config">
-		<section>
-			<h2>サイズ設定</h2>
-			<ul class="size">
-				<li><label>横幅：<input type="number" name="width" value="300"> px</label></li>
-				<li><label>高さ：<input type="number" name="height" value="300"> px</label></li>
-			</ul>
+		<div class="config">
+			<section>
+				<h2>サイズ設定</h2>
+				<ul class="size-list">
+					<li>
+						<label>横幅：<input type="number" name="width" value="300" /> px</label>
+					</li>
+					<li>
+						<label>高さ：<input type="number" name="height" value="300" /> px</label>
+					</li>
+				</ul>
+			</section>
 
-		</section>
+			<section>
+				<h2>比率設定</h2>
+				<ul class="ratio-list">
+					<li>
+						<label><input type="radio" name="ratio" value="0" checked />半分</label>
+					</li>
+					<li>
+						<label><input type="radio" name="ratio" value="1" />白銀比</label>
+					</li>
+					<li>
+						<label><input type="radio" name="ratio" value="2" />黄金比</label>
+					</li>
+				</ul>
+			</section>
 
-		<section>
-			<h2>比率設定</h2>
-			<ul class="ratio">
-				<li><label><input type="radio" name="ratio" value="0" checked>半分</label></li>
-				<li><label><input type="radio" name="ratio" value="1">白銀比</label></li>
-				<li><label><input type="radio" name="ratio" value="2">黄金比</label></li>
-			</ul>
-		</section>
-
-		<section>
-			<h2>計算方法</h2>
-			<ul class="base-size">
-				<li><label><input type="radio" name="base-size" value="0" checked>縦幅と高さを元に計算する（比率無視）</label></li>
-				<li><label><input type="radio" name="base-size" value="1">横幅を元に計算する（高さ無視）</label></li>
-				<li><label><input type="radio" name="base-size" value="2">高さを元に計算する（横幅無視）</label></li>
-			</ul>
-		</section>
-	</div>
-
-	<main>
-		<div id="js_aspect-box" class="aspect-box"></div>
-
-		<div class="code-area">
-			<h2>CSSコード</h2>
-			<code id="js_aspect-code" class="aspect-code"></code>
+			<section>
+				<h2>計算方法</h2>
+				<ul class="calculation-method-list">
+					<li>
+						<label><input type="radio" name="method" value="0" checked />縦幅と高さを元に計算する（比率無視）</label>
+					</li>
+					<li>
+						<label><input type="radio" name="method" value="1" />横幅を元に計算する（高さ無視）</label>
+					</li>
+					<li>
+						<label><input type="radio" name="method" value="2" />高さを元に計算する（横幅無視）</label>
+					</li>
+				</ul>
+			</section>
 		</div>
-	</main>
 
-	<script src="js/main.js"></script>
-</body>
+		<main>
+			<div id="js_aspect-box" class="aspect-box"></div>
 
+			<div class="code-area">
+				<h2>CSSコード</h2>
+				<code id="js_aspect-code" class="aspect-code"></code>
+			</div>
+		</main>
+
+		<footer>
+			<small>&copy; 2023 <a href="https://github.com/f21wk/ratio-generator">比率ジェネレーター</a></small>
+		</footer>
+
+		<script src="js/main.js"></script>
+	</body>
 </html>

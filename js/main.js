@@ -1,144 +1,228 @@
+/**
+ * アスペクトボックスのサイズを管理する関数
+ */
 (() => {
-    const DEFAULT_CSS_CODE = ``;
-    const [INPUT_WIDHT, INPUT_HEIGHT] = document.querySelectorAll('.size input[type="number"]');
-    const RESET_BUTTON = document.getElementById('js_reset');
-    const INPUT_RATIO_LIST = document.querySelectorAll('input[name="ratio"]');
-    const INPUT_BASE_SIZE_LIST = document.querySelectorAll('input[name="base-size"]');
-    const $BOX = document.getElementById('js_aspect-box');
-    const BOX_STYLE = $BOX.style;
-    const $BOX_CSS_CODE = document.getElementById('js_aspect-code');
-    let ratioState = "0";
-    let baseSizeState = "0";
+	/**
+	 * 入力フィールドの幅と高さを取得
+	 * @type {NodeListOf<HTMLInputElement>}
+	 */
+	const [inputWidth, inputHeight] = document.querySelectorAll('.size-list input');
 
-    const setDefaultAspectBoxStyle = () => {
-        BOX_STYLE.width = `${INPUT_WIDHT.value}px`;
-        BOX_STYLE.height = `${INPUT_HEIGHT.value}px`;
-        BOX_STYLE.aspectRatio = `${INPUT_WIDHT.value} / ${INPUT_HEIGHT.value}`;
-    }
+	/**
+	 * リセットボタン
+	 * @type {HTMLButtonElement}
+	 */
+	const resetButton = document.getElementById('js_reset');
 
-    INPUT_WIDHT.addEventListener('input', () => {
-        setAspectBoxStyle();
-    })
-    INPUT_HEIGHT.addEventListener('input', () => {
-        setAspectBoxStyle();
-    })
-    RESET_BUTTON.addEventListener('click', () => {
-        reset();
-    })
+	/**
+	 * アスペクト比の選択肢リスト
+	 * @type {NodeListOf<HTMLInputElement>}
+	 */
+	const inputRatioList = document.querySelectorAll('.ratio-list input');
 
-    INPUT_RATIO_LIST.forEach(radio => {
-        radio.addEventListener('change', () => {
-            ratioState = radio.value;
+	/**
+	 * 計算方法の選択肢リスト
+	 * @type {NodeListOf<HTMLInputElement>}
+	 */
+	const inputBaseSizeList = document.querySelectorAll('.calculation-method-list input');
 
-            setAspectBoxStyle();
-        })
-    })
+	/**
+	 * アスペクトボックス要素
+	 * @type {HTMLElement}
+	 */
+	const aspectBox = document.getElementById('js_aspect-box');
 
-    INPUT_BASE_SIZE_LIST.forEach(radio => {
-        radio.addEventListener('change', () => {
-            baseSizeState = radio.value;
-            INPUT_WIDHT.disabled = false;
-            INPUT_HEIGHT.disabled = false;
+	/**
+	 * アスペクトボックスのスタイル
+	 * @type {CSSStyleDeclaration}
+	 */
+	const boxStyle = aspectBox.style;
 
-            switch (baseSizeState) {
-                case "0":
-                    INPUT_RATIO_LIST.forEach(radio => {
-                        radio.disabled = true;
-                    })
-                    break;
-                case "1":
-                    INPUT_HEIGHT.disabled = true;
-                    break;
-                case "2":
-                    INPUT_WIDHT.disabled = true;
-                    break;
-            }
+	/**
+	 * アスペクトボックスのCSSコード表示要素
+	 * @type {HTMLElement}
+	 */
+	const boxCSSCode = document.getElementById('js_aspect-code');
 
+	/**
+	 * アスペクト比の状態
+	 * @type {string}
+	 */
+	let ratioState = '0';
 
-            if (baseSizeState != "0") {
-                INPUT_RATIO_LIST.forEach(radio => {
-                    radio.disabled = false;
-                })
-            }
+	/**
+	 * ベースサイズの状態
+	 * @type {string}
+	 */
+	let baseSizeState = '0';
 
-            setAspectBoxStyle();
-        })
-    })
+	/**
+	 * デフォルトのアスペクトボックスのスタイルを設定する
+	 */
+	const setDefaultAspectBoxStyle = () => {
+		boxStyle.width = `${inputWidth.value}px`;
+		boxStyle.height = `${inputHeight.value}px`;
+		boxStyle.aspectRatio = `${inputWidth.value} / ${inputHeight.value}`;
+	};
 
-    const setAspectBoxStyle = () => {
-        setDefaultAspectBoxStyle();
+	/**
+	 * アスペクトボックスのスタイルを設定するイベントリスナー（幅入力フィールド）
+	 */
+	inputWidth.addEventListener('input', () => {
+		setAspectBoxStyle();
+	});
 
-        if (baseSizeState !== "0") {
-            if (baseSizeState === "1") {
-                BOX_STYLE.height = "auto";
-            } else if (baseSizeState === "2") {
-                BOX_STYLE.width = `auto`;
-            }
+	/**
+	 * アスペクトボックスのスタイルを設定するイベントリスナー（高さ入力フィールド）
+	 */
+	inputHeight.addEventListener('input', () => {
+		setAspectBoxStyle();
+	});
 
-            switch (ratioState) {
-                case "0":
-                    setAspectRatio(1, 2);
-                    break;
-                case "1":
-                    setAspectRatio(1, 1.414);
-                    break;
-                case "2":
-                    setAspectRatio(1, 1.618);
-                    break;
-            }
-        }
+	/**
+	 * リセットボタンのクリックイベントリスナー
+	 */
+	resetButton.addEventListener('click', () => {
+		reset();
+	});
 
-        setShowCSSCode();
-    }
+	/**
+	 * アスペクト比の選択肢リストのイベントリスナーを設定する
+	 */
+	inputRatioList.forEach((radio) => {
+		radio.addEventListener('change', () => {
+			ratioState = radio.value;
+			setAspectBoxStyle();
+		});
+	});
 
-    const setAspectRatio = (ratio_w, ratio_h) => {
-        if (baseSizeState === "1") {
-            BOX_STYLE.aspectRatio = `${ratio_h} / ${ratio_w}`;
-        } else if (baseSizeState === "2") {
-            BOX_STYLE.aspectRatio = `${ratio_w} / ${ratio_h}`;
-        }
-    }
+	/**
+	 * ベースサイズの選択肢
+	 * リストのイベントリスナーを設定する
+	 */
+	inputBaseSizeList.forEach((radio) => {
+		radio.addEventListener('change', () => {
+			baseSizeState = radio.value;
+			inputWidth.disabled = false;
+			inputHeight.disabled = false;
+			switch (baseSizeState) {
+				case '0':
+					inputRatioList.forEach((radio) => {
+						radio.disabled = true;
+					});
+					break;
+				case '1':
+					inputHeight.disabled = true;
+					break;
+				case '2':
+					inputWidth.disabled = true;
+					break;
+			}
 
-    const setShowCSSCode = () => {
-        $BOX.innerText = `横幅 : ${$BOX.clientWidth}px 
-                        高さ : ${$BOX.clientHeight}px`;
-        $BOX_CSS_CODE.innerText = setCSSCodeText();
-    }
+			if (baseSizeState != '0') {
+				inputRatioList.forEach((radio) => {
+					radio.disabled = false;
+				});
+			}
 
-    const setCSSCodeText = () => {
-        return `width: ${BOX_STYLE.width};
-            height: ${BOX_STYLE.height};
-            aspect-ratio: ${BOX_STYLE.aspectRatio};`;
-    }
+			setAspectBoxStyle();
+		});
+	});
 
-    const init = () => {
-        INPUT_WIDHT.disabled = false;
-        INPUT_HEIGHT.disabled = false;
+	/**
+	 * アスペクトボックスのスタイルを設定する
+	 */
+	const setAspectBoxStyle = () => {
+		setDefaultAspectBoxStyle();
+		if (baseSizeState !== '0') {
+			if (baseSizeState === '1') {
+				boxStyle.height = 'auto';
+			} else if (baseSizeState === '2') {
+				boxStyle.width = 'auto';
+			}
 
-        INPUT_RATIO_LIST.forEach(radio => {
-            radio.disabled = true;
-        })
+			switch (ratioState) {
+				case '0':
+					setAspectRatio(1, 2);
+					break;
+				case '1':
+					setAspectRatio(1, 1.414);
+					break;
+				case '2':
+					setAspectRatio(1, 1.618);
+					break;
+			}
+		}
 
-        setAspectBoxStyle();
-    }
+		setShowCSSCode();
+	};
 
-    const reset = () => {
-        INPUT_WIDHT.value = "500";
-        INPUT_HEIGHT.value = "300";
-        INPUT_WIDHT.disabled = false;
-        INPUT_HEIGHT.disabled = false;
+	/**
+	 * アスペクト比を設定する
+	 * @param {number} ratio_w - 幅の比率
+	 * @param {number} ratio_h - 高さの比率
+	 */
+	const setAspectRatio = (ratio_w, ratio_h) => {
+		if (baseSizeState === '1') {
+			boxStyle.aspectRatio = `${ratio_h} / ${ratio_w}`;
+		} else if (baseSizeState === '2') {
+			boxStyle.aspectRatio = `${ratio_w} / ${ratio_h}`;
+		}
+	};
 
-        INPUT_RATIO_LIST.forEach(radio => {
-            radio.disabled = true;
-        })
+	/**
+	 * CSSコード表示を更新する
+	 */
+	const setShowCSSCode = () => {
+		aspectBox.innerText = `横幅 : ${aspectBox.clientWidth}px
+        高さ : ${aspectBox.clientHeight}px`;
 
-        INPUT_RATIO_LIST[0].checked = true;
-        ratioState = "0";
-        INPUT_BASE_SIZE_LIST[0].checked = true;
-        baseSizeState = "0";
+		boxCSSCode.innerText = setCSSCodeText();
+	};
 
-        setAspectBoxStyle();
-    }
+	/**
+	 * CSSコードテキストを生成する
+	 * @returns {string} - 生成されたCSSコードテキスト
+	 */
+	const setCSSCodeText = () => {
+		return `width: ${boxStyle.width};
+        height: ${boxStyle.height};
+        aspect-ratio: ${boxStyle.aspectRatio};`;
+	};
 
-    init();
-})()
+	/**
+	 * 初期化関数
+	 */
+	const init = () => {
+		inputWidth.disabled = false;
+		inputHeight.disabled = false;
+
+		inputRatioList.forEach((radio) => {
+			radio.disabled = true;
+		});
+
+		setAspectBoxStyle();
+	};
+
+	/**
+	 * リセット関数
+	 */
+	const reset = () => {
+		inputWidth.value = '300';
+		inputHeight.value = '300';
+		inputWidth.disabled = false;
+		inputHeight.disabled = false;
+		inputRatioList.forEach((radio) => {
+			radio.disabled = true;
+		});
+
+		inputRatioList[0].checked = true;
+		ratioState = '0';
+		inputBaseSizeList[0].checked = true;
+		baseSizeState = '0';
+
+		setAspectBoxStyle();
+	};
+
+	init();
+})();

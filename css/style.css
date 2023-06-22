@@ -1,35 +1,61 @@
 body {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+h1,
+h2 {
     margin: 0;
 }
 
-header {
-    max-width: 800px;
+ul {
+    list-style: none;
 }
 
-.config-area{
+button {
+    width: fit-content;
+}
+
+input[type="number"] {
+    width: 3rem;
+}
+
+.config {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.aspect-box {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    place-items: center;
+    color: #000;
+    font-size: 2rem;
+    background-color: #8f8f8f;
 }
 
-.config-area > div {
+
+.code-area {
     display: flex;
     flex-direction: column;
 }
 
-.size input[type="number"]{
-    width: 3rem;
-}
+.aspect-code {
+    background: #efefef;
+    border: 1px solid #8f8f8f;
+    border-radius: 15px;
+    padding: 1rem;
+    color: #000;
+    font-size: 1rem;
+    line-height: 1.5;
 
-.size button {
-    width: 10rem;
-}
-.base-size p{
-    margin: 0;
-}
-
-.box{
-    width: 100px;
-    aspect-ratio: 1/1.414;
-
-    background: #4d4d4d;
+    margin-bottom: 32px;
 }
